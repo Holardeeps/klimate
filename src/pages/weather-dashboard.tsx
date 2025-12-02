@@ -1,9 +1,11 @@
 import CurrentWeather from "@/components/current-weather";
+import { FavoriteCities } from "@/components/favorite-cities";
 import { HourlyTemperature } from "@/components/hourly-temperature";
 import WeatherSkeleton from "@/components/loading-skeleton";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { WeatherDetails } from "@/components/weather-details";
+import { WeatherForecast } from "@/components/weather-forecast";
 import { useGeolocation } from "@/hooks/use-geolocation";
 import { useForecastQuery, useReverseGeoCodeQuery, useWeatherQuery } from "@/hooks/use-weather";
 import { AlertTriangle, MapPin, RefreshCcw, RefreshCw } from "lucide-react";
@@ -15,10 +17,6 @@ import { AlertTriangle, MapPin, RefreshCcw, RefreshCw } from "lucide-react";
     const locationQuery = useReverseGeoCodeQuery(coordinates);
     const weatherQuery = useWeatherQuery(coordinates);
     const forecastQuery = useForecastQuery(coordinates);
-
-    // console.log(locationQuery.data)
-    // console.log(weatherQuery.data)
-    // console.log(forecastQuery.data)
 
     const handleRefresh = () => {
         getLocation()
@@ -89,6 +87,7 @@ import { AlertTriangle, MapPin, RefreshCcw, RefreshCw } from "lucide-react";
     
     return <div className="space-y-4">
         {/* Favorite cities */}
+        <FavoriteCities />
         <div className="flex items-center justify-between">
             <h1 className="text-xl font-black tracking-tight">My Location</h1>
             <Button variant={"outline"} size={"icon"} onClick={handleRefresh} disabled={weatherQuery.isFetching || forecastQuery.isFetching}>
@@ -105,8 +104,10 @@ import { AlertTriangle, MapPin, RefreshCcw, RefreshCw } from "lucide-react";
                 
                 <HourlyTemperature data={forecastQuery.data} />
             </div>
-            <div className="">
+            <div className="grid gap-6 md:grid-cols-2 items-start">
                 <WeatherDetails data={weatherQuery.data} />
+
+                <WeatherForecast data={forecastQuery.data} />
             </div>
         </div>
     </div>

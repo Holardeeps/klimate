@@ -4,7 +4,8 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import Layout from "@/components/layout.tsx";
 import { ThemeProvider} from "@/context/theme-provider.tsx";
 import WeatherDashboard from "@/pages/weather-dashboard.tsx";
-import CityPage from "@/pages/city-page.tsx";
+import { CityPage } from "@/pages/city-page.tsx";
+import { Toaster } from "./components/ui/sonner";
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
                   <Route path={"/city/:cityName"} element={<CityPage />} />
               </Routes>
           </Layout>
+          <Toaster richColors />
           </ThemeProvider>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />
